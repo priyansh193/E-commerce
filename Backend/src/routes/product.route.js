@@ -12,7 +12,7 @@ router.route("/addproduct").post(adminAuth, upload.fields([
     {name : 'image4', maxCount:1},
 ]) , addProduct)
 
-router.route("/list").post(listProduct)
+router.route("/list").get(listProduct)
 router.route("/delete").post(adminAuth, removeProduct)
 router.route("/singleProduct").post(singleProduct)
 

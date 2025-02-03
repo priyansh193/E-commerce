@@ -1,18 +1,21 @@
 import { createContext, useEffect, useState } from "react";
-import {products} from '../assets/assets.js'
+import axios from 'axios'
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
-export const ShopContext = createContext();
+const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
 
     const currency = '$'
     const delivery_fee = 10
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [search, setSearch] = useState('')
     const [showSearch, setShowSearch] = useState(false)
     const [cartItems, setCartItems] = useState({})
+    const [products,setProducts] = useState([])
+    const [token, setToken] = useState('')
     const navigate = useNavigate();
 
 
@@ -82,6 +85,31 @@ const ShopContextProvider = (props) => {
         setCartItems(cartData)
     }
 
+    const getProductsData = async () => {
+        try {
+            
+            const response = await axios.get(backendUrl + "/api/v1/products/list")
+            if (response.data.sucess){
+                setProducts(response.data.data)
+            } else{
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        getProductsData()
+    },[])
+
+    useEffect(() => {
+        if (!token && localStorage.getItem('token')){
+            setToken(localStorage.getItem('token'))
+        }
+    },[])
+
     const value = {
         products,
         currency,
@@ -96,6 +124,10 @@ const ShopContextProvider = (props) => {
         updateQuantity,
         getCartAmount,
         navigate,
+        backendUrl,
+        token,
+        setToken,
+        setCartItems
 
     }
 
@@ -106,4 +138,4 @@ const ShopContextProvider = (props) => {
     )
 }
 
-export default ShopContextProvider
+export {ShopContext, ShopContextProvider};

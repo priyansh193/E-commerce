@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import { ShopContext } from '../context/ShopContext'
+import  {ShopContext } from '../context/ShopContext'
 import Title from './Title.jsx'
 import ProductItem from './ProductItem.jsx'
 
@@ -10,7 +10,7 @@ function BestSeller() {
     useEffect(() => {
         const bestProduct = products.filter((item) => (item.bestseller))
         setBestSeller(bestProduct.slice(0,5))
-    },[])
+    },[products])
 
   return (
     <div className='my-10'>

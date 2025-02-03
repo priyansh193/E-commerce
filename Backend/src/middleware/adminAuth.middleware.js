@@ -2,9 +2,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 
 
-export const adminAuth = asyncHandler(async (req,res, next) => {
+export const adminAuth = async (req,res, next) => {
     try {
-        const token = req.header
+        const {token} = req.headers
+        console.log(token)
 
         if (!token) {
             return res.json({success:false, message: "Unauthorized request"})
@@ -17,6 +18,6 @@ export const adminAuth = asyncHandler(async (req,res, next) => {
         }
         next()
     } catch (error) {
-        return res.json({success:false, message:  "error?.message" || "Invalid access token"})
+        return res.json({success:false, message:  error?.message || "Invalid access token"})
     }
-})
+}

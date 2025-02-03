@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
+import  {ShopContext}  from '../context/ShopContext'
 import Title from './Title.jsx'
 import ProductItem from './ProductItem.jsx'
 
@@ -9,7 +9,7 @@ function LatestCollection() {
 
     useEffect(() => {
         setLatestProduct(products.slice(0,10));
-    },[])
+    },[products])
     
 
   return (

@@ -56,12 +56,10 @@ const removeProduct = asyncHandler(async (req,res) => {
     const {productId} = req.body
 
     if (!isValidObjectId(productId)){
-        return res.json({success:false, message : "Invalid Product Id"})
+        return res.json({sucess : false, message: "invalid product Id"})
     }
 
-    const remove = await Product.findByIdAndDelete(
-        productId
-    )
+    const remove = await Product.findByIdAndDelete(productId)
 
     return res
         .status(200)
