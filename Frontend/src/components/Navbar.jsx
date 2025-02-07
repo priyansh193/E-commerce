@@ -26,7 +26,7 @@ function Navbar() {
                 <p>HOME</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
             </NavLink>
-            <NavLink to='/collection' className= 'flex flex-col items-center gap-1'>
+            <NavLink to='/fashion' className= 'flex flex-col items-center gap-1'>
                 <p>COLLECTION</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
             </NavLink>
@@ -42,6 +42,10 @@ function Navbar() {
         </ul>
 
         <div className='flex items-center gap-6'>
+           <div className='flex items-center'>
+            <img className='w-12 cursor-pointer' src={assets.shop_icon} alt="" />
+            <p className='text-gray-600'>Become a seller</p>
+           </div>
             <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor pointer' alt="Search" />
 
             <div className='group relative'>

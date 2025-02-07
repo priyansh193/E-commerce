@@ -1,7 +1,6 @@
 import React from 'react'
 import {Routes,Route} from 'react-router-dom'
 import Home from './pages/Home.jsx'
-import Collection from './pages/Collection.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import Product from './pages/Product.jsx'
@@ -14,6 +13,12 @@ import Footer from './components/Footer.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import FashionCollection from './pages/FashionCollection.jsx'
+import ElectronicsCollection from './pages/ElectronicsCollection.jsx'
+import HomeCollection from './pages/HomeCollection.jsx'
+import BeautyCollection from './pages/BeautyCollection.jsx'
+import SportsCollection from './pages/SportsCollection.jsx'
+import ToysCollection from './pages/ToysCollection.jsx'
 
 function App() {
   return (
@@ -23,7 +28,12 @@ function App() {
       <SearchBar/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/collection' element={<Collection/>} />
+        <Route path='/fashion' element={<FashionCollection/>} />
+        <Route path='/electronics' element={<ElectronicsCollection/>} />
+        <Route path='/home-collection' element={<HomeCollection/>} />
+        <Route path='/beauty' element={<BeautyCollection/>} />
+        <Route path='/sports' element={<SportsCollection/>} />
+        <Route path='/toys' element={<ToysCollection/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/product/:productId' element={<Product/>} />
