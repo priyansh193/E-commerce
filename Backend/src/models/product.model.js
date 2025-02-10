@@ -18,6 +18,10 @@ const productSchema = new Schema (
             type : Array,
             required : true,
         },
+        owner : {
+            type : Schema.Types.ObjectId,
+            ref : "Shop"
+        },
         category : {
             type : String,
             required : true,

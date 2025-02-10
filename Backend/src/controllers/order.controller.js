@@ -3,11 +3,12 @@ import Order from "../models/order.model.js"
 
 const placeOrder = async (req,res) => {
     try {
-        const userId = req.user._id
-        const {items, amount, address} = req.body
+        const buyer = req.user._id
+        const {items, amount, address, seller} = req.body
 
         const orderData = {
-            userId,
+            buyer,
+            seller,
             items,
             address,
             amount,
@@ -18,7 +19,7 @@ const placeOrder = async (req,res) => {
         const newOrder = new Order(orderData)
         await newOrder.save()
 
-        await User.findByIdAndUpdate(userId, {cartData : {}})
+        await User.findByIdAndUpdate(buyer, {cartData : {}})
 
         res.json({success : true, message : "Order Placed"})
 

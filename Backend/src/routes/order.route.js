@@ -1,18 +1,22 @@
 import express from 'express'
 import { placeOrder, placeOrderStripe, placeOrderRazorpay, allOrders, userOrders, updateStatus } from '../controllers/order.controller.js'
-import { adminAuth } from '../middleware/adminAuth.middleware.js'
+
 import { verifyJWT } from '../middleware/auth.middleware.js'
+import {verifyShopjwt} from '../middleware/adminAuth.middleware.js'
 
 const router = express.Router()
 
-router.post('/list', adminAuth, allOrders)
-router.post('/status', adminAuth, updateStatus)
+router.use(verifyJWT)
+router.use(verifyShopjwt)
+
+router.post('/list', allOrders)
+router.post('/status', updateStatus)
 
 
-router.post('/place',verifyJWT, placeOrder)
-router.post('/stripe',verifyJWT, placeOrderStripe)
-router.post('/razorpay',verifyJWT, placeOrderRazorpay)
+router.post('/place', placeOrder)
+router.post('/stripe', placeOrderStripe)
+router.post('/razorpay', placeOrderRazorpay)
 
-router.post('/userorders', verifyJWT, userOrders)
+router.post('/userorders', userOrders)
 
 export default router

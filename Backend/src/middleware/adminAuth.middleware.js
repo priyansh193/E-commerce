@@ -1,8 +1,9 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
+import {Shop} from '../models/shop.model.js'
 
 
-export const adminAuth = async (req,res, next) => {
+export const verifyShopjwt = async (req,res, next) => {
     try {
         const {token} = req.headers
         console.log(token)
@@ -13,9 +14,14 @@ export const adminAuth = async (req,res, next) => {
 
         const decodedToken = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
     
-        if (decodedToken !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD){
-            return res.json({success:false, message: "not authorized login again"})
+        const shop = await Shop.findById(decodedToken?._id).select("-password -refreshToken")
+
+        if (!shop) {
+            
+            return res.json({success:false, message:"Invalid Token"})
         }
+
+        req.shop = shop;
         next()
     } catch (error) {
         return res.json({success:false, message:  error?.message || "Invalid access token"})

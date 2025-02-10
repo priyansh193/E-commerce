@@ -8,6 +8,20 @@ import { isValidObjectId } from "mongoose";
 const addProduct = asyncHandler(async (req,res) => {
     const {name, description, price, category, subCategory, sizes, bestSeller} = req.body
 
+    if (
+        [name, description, price, category, subCategory, bestSeller].some((field) => field?.trim() === "")
+    ) {
+        return res.json({success:false, message:"All fields are required"})
+    }
+
+    const existedProduct = await Product.findOne({
+        $and: [{ name: name }, { owner: req.shop._id }],
+      });
+
+    if (existedProduct) {
+        return res.json({success : false, message : "Product with same name already exist"})
+    }
+
     const image1 = req.files.image1 && req.files.image1[0]
     const image2 = req.files.image2 && req.files.image2[0]
     const image3 = req.files.image3 && req.files.image3[0]
@@ -21,13 +35,13 @@ const addProduct = asyncHandler(async (req,res) => {
             return result.secure_url
         })
     )
-    console.log(imageUrl)
 
     const product = await Product.create({
         name,
         description,
         category,
         price: Number(price),
+        owner : req.shop._id,
         subCategory,
         bestSeller : bestSeller === "true" ? true : false,
         sizes: JSON.parse(sizes),
@@ -59,7 +73,18 @@ const removeProduct = asyncHandler(async (req,res) => {
         return res.json({sucess : false, message: "invalid product Id"})
     }
 
-    const remove = await Product.findByIdAndDelete(productId)
+
+    const product = await Product.findById(productId)
+    if (!product) {
+        return res.json({success: false, message : "No such product exist"})
+    }
+    /*console.log(typeof(product.owner))
+    console.log(typeof(req.shop._id))*/
+    if (JSON.stringify(product.owner) !== JSON.stringify(req.shop._id)){
+        return res.json({success : false, message: "You are Not allowed to remove this Product"})
+    }
+
+    const removedProduct = await Product.findByIdAndDelete(productId)
 
     return res
         .status(200)
