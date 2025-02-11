@@ -118,6 +118,10 @@ const logoutShop = asyncHandler(async (req,res) => {
     .json(new ApiResponse(200, {}, "Shop logged Out"))
 })
 
+const getShopProducts = asyncHandler(async (req,res) => {
+    
+})
+
 export {
     registerShop,
     loginShop,

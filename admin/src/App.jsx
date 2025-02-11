@@ -13,23 +13,21 @@ import AddHomeLiving from "./pages/AddHomeLiving.jsx"
 import AddBeauty from "./pages/AddBeauty.jsx"
 import AddBooksToys from "./pages/AddBooksToys.jsx"
 import AddSports from "./pages/AddSports.jsx"
+import { useContext } from "react"
+import { ShopContext } from "./context/ShopContext.jsx"
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
 export const currency = '$'
  
 function App() {
 
-  const [token,setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'')
-
-  useEffect(() => {
-    localStorage.setItem('token', token)
-  },[token])
+  const {token, setToken} = useContext(ShopContext)
 
   return (
     <div className="bg-gray-50 min-h-screen">
       <ToastContainer/>
       {token === ""
-        ? <Login setToken={setToken}/>
+        ? <Login/>
         :
         <>
           <Navbar setToken={setToken}/>

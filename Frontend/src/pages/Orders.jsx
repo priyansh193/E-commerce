@@ -30,7 +30,7 @@ function Orders() {
       }
 
     } catch (error) {
-      
+      console.log(error.message)
     }
   }
 

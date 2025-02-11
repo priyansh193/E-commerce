@@ -39,7 +39,7 @@ const placeOrderRazorpay = async (req,res) => {
 
 const allOrders = async (req,res) => {
     try {
-        const orders = await Order.find({})
+        const orders = await Order.find({ seller : req.shop._id })
         res.json({success : true, orders})
     } catch (error) {
         console.log(error)
@@ -50,8 +50,10 @@ const allOrders = async (req,res) => {
 const userOrders = async (req,res) => {
     try {
         const userId = req.user._id
+        console.log(userId)
     
-        const orders = await Order.find( {userId} )
+        const orders = await Order.find( {buyer : userId} )
+        console.log(orders)
         res.json({success : true, orders})
     } catch (error) {
         console.log(error)

@@ -47,28 +47,31 @@ function PlaceOrder() {
         }
       }
       
-      let orderData = {
-        address : formData,
-        items : orderItems,
-        amount : getCartAmount() + delivery_fee
+      for (const i in orderItems){
+        let orderData = {
+          address : formData,
+          items : orderItems[i],
+          amount : getCartAmount() + delivery_fee,
+          seller : orderItems[i].owner
+        }
+
+        switch (method) {
+          case 'cod':
+            const response = await axios.post(backendUrl + '/api/v1/order/place', orderData, {headers: {token}})
+            if (response.data.success){
+              setCartItems({})
+            } else{
+              toast.error(response.data.message)
+            }
+            break;
+        
+          default:
+            console.log('nt entered')
+            break;
+        }
       }
 
-      
-      switch (method) {
-        case 'cod':
-          const response = await axios.post(backendUrl + '/api/v1/order/place', orderData, {headers: {token}})
-          if (response.data.success){
-            setCartItems({})
-            navigate('/orders')
-          } else{
-            toast.error(response.data.message)
-          }
-          break;
-      
-        default:
-          console.log('nt entered')
-          break;
-      }
+      navigate('/orders')
 
     } catch (error) {
         console.log(error)

@@ -5,9 +5,9 @@ import { verifyShopjwt } from '../middleware/adminAuth.middleware.js'
 
 const router = Router()
 
-router.use(verifyShopjwt)
 
-router.route("/addproduct").post(upload.fields([
+
+router.route("/addproduct").post(verifyShopjwt, upload.fields([
     {name : 'image1', maxCount:1},
     {name : 'image2', maxCount:1},
     {name : 'image3', maxCount:1},
@@ -15,7 +15,7 @@ router.route("/addproduct").post(upload.fields([
 ]) , addProduct)
 
 router.route("/list").get(listProduct)
-router.route("/delete").post(removeProduct)
+router.route("/delete").post(verifyShopjwt, removeProduct)
 router.route("/singleProduct").post(singleProduct)
 
 export default router

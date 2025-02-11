@@ -16,6 +16,10 @@ function Navbar() {
         navigate('/login')
     }
 
+    const ShopPanel = () => {
+        <a href="http://localhost:5174"></a>
+    }
+
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
 
@@ -42,9 +46,9 @@ function Navbar() {
         </ul>
 
         <div className='flex items-center gap-6'>
-           <div className='flex items-center'>
-            <img className='w-12 cursor-pointer' src={assets.shop_icon} alt="" />
-            <p className='text-gray-600'>Become a seller</p>
+            <div className='flex items-center'>
+                <img className='w-12 cursor-pointer' src={assets.shop_icon} alt="" />
+                <p className='text-gray-600'>Become a seller</p>
            </div>
             <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor pointer' alt="Search" />
 

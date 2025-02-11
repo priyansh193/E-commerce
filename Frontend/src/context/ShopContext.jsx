@@ -11,6 +11,7 @@ const ShopContextProvider = (props) => {
     const currency = '$'
     const delivery_fee = 10
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const shopUrl = import.meta.env.VITE_SHOP_URL
     const [search, setSearch] = useState('')
     const [showSearch, setShowSearch] = useState(false)
     const [cartItems, setCartItems] = useState({})
@@ -107,6 +108,7 @@ const ShopContextProvider = (props) => {
         try {
             
             const response = await axios.get(backendUrl + "/api/v1/products/list")
+            console.log(response)
             if (response.data.sucess){
                 setProducts(response.data.data)
             } else{
@@ -160,7 +162,8 @@ const ShopContextProvider = (props) => {
         backendUrl,
         token,
         setToken,
-        setCartItems
+        setCartItems,
+        shopUrl
 
     }
 

@@ -1,13 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose, {Schema} from 'mongoose'
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema(
+{
     buyer : {
         type : Schema.Types.ObjectId,
         ref : "User",
         required : true,
     },
     seller : {
-        type : String,
+        type : Schema.Types.ObjectId,
+        ref : "Shop",
         required : true,
     },
     items : {type : Array, required: true},
