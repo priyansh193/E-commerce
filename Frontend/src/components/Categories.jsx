@@ -9,7 +9,7 @@ export default function Categories() {
       { name: "Home & Living", image: "/images/home-living.png" },
       { name: "Beauty & Health", image: "/images/beauty-health.png" },
       { name: "Sports", image: "/images/sports.png" },
-      { name: "Toys", image: "/images/toys.png" },
+      { name: "Books & Toys", image: "/images/toys.png" },
     ];
   
     return (
@@ -77,7 +77,7 @@ export default function Categories() {
               alt=""
               className="w-16 h-16 object-cover rounded-full mb-2"
             />
-            <p className="text-sm font-semibold text-gray-700">Toys</p>
+            <p className="text-sm font-semibold text-gray-700">Books & Toys</p>
           </div>
           </NavLink>
         </div>

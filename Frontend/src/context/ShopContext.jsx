@@ -20,11 +20,14 @@ const ShopContextProvider = (props) => {
     const navigate = useNavigate();
 
 
-    const AddToCart = async (itemId,size) => {
+    const AddToCart = async (itemId,size, subCategory) => {
 
-        if (!size){
-            toast.error('Select Product Size');
-            return
+        if (subCategory === 'Clothing' || subCategory === 'Mobiles' || subCategory === 'Televisons' || subCategory === 'Watches'){
+            if (!size){
+                toast.error('Please select size')
+                return
+            }
+            
         }
 
         let cartData = structuredClone(cartItems)
@@ -34,7 +37,7 @@ const ShopContextProvider = (props) => {
                 cartData[itemId][size]++;
             }
             else{
-                cartData[itemId][size] =1;
+                cartData[itemId][size] = 1;
             }
         }
         else{

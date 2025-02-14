@@ -66,6 +66,7 @@ function AddElectronics({ token }) {
         setImage3(false);
         setImage4(false);
         setPrice("");
+        setSizes([])
       } else {
         toast.error(response.data.message);
       }

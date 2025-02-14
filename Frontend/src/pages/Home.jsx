@@ -5,6 +5,7 @@ import BestSeller from "../components/BestSeller";
 import OurPolicy from "../components/OurPolicy";
 import ImageSlider from "../components/ImageSlider";
 import Categories from '../components/Categories.jsx'
+import ElectronicCollection from "../components/ElectronicCollection.jsx";
 
 const images = [
   "https://via.placeholder.com/600x400?text=Image+1",
@@ -21,6 +22,7 @@ function Home() {
         <ImageSlider images={images} />
       </div>
       <LatestCollection />
+      <ElectronicCollection/>
       <BestSeller />
       <OurPolicy />
     </div>
