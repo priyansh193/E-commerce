@@ -19,6 +19,7 @@ import HomeCollection from './pages/HomeCollection.jsx'
 import BeautyCollection from './pages/BeautyCollection.jsx'
 import SportsCollection from './pages/SportsCollection.jsx'
 import ToysCollection from './pages/ToysCollection.jsx'
+import Verify from './pages/Verify.jsx'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/place-order' element={<PlaceOrder/>} />
         <Route path='/orders' element={<Orders/>} />
+        <Route path='/verify' element={<Verify/>} />
       </Routes>
 
       <Footer/>

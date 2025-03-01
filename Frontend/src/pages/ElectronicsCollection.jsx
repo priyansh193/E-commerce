@@ -12,50 +12,52 @@ function ElectronicsCollection() {
   const [sortType, setSortType] = useState('relavent')
 
   useEffect(() => {
-          const filter = products.filter((item) => item.category === 'Electronics')
-          setFilterProducts(filter)
-  },[])
-
-  const toggleSubCategory = (e) => {
-    if (subCategory.includes(e.target.value)){
-      setSubCategory(prev => prev.filter(item => item!==e.target.value))
-    }
-    else{
-      setSubCategory(prev => [...prev, e.target.value])
-    }
-  }
-
-  const applyFilter = () => {
-    let productsCopy = products.slice();
-
-    if (showSearch && search){
-      productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-    }
-
-    if (subCategory.length > 0){
-      productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory))
-    }
-
-    setFilterProducts(productsCopy)
-  }
-
-  const sortProduct = () => {
-    let fpCopy = filterProducts.slice()
-
-    switch (sortType) {
-      case  'low-high' : 
-        setFilterProducts(fpCopy.sort((a,b) => (a.price - b.price)))
-        break;
-
-      case 'high-low' : 
-        setFilterProducts(fpCopy.sort((a,b) => (b.price - a.price)))
-        break;
-
-      default: 
-        applyFilter();
-        break;
-    }
-  }
+      applyFilter();
+    }, [subCategory, search]);
+  
+    useEffect(() => {
+      sortProduct();
+    }, [sortType]);
+  
+    const toggleSubCategory = (e) => {
+      if (subCategory.includes(e.target.value)) {
+        setSubCategory(prev => prev.filter(item => item !== e.target.value));
+      } else {
+        setSubCategory(prev => [...prev, e.target.value]);
+      }
+    };
+  
+    const applyFilter = () => {
+      let productsCopy = products.filter((item) => item.category === 'Electronics');
+  
+      if (showSearch && search) {
+        productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+      }
+  
+      if (subCategory.length > 0) {
+        productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory));
+      }
+  
+      setFilterProducts(productsCopy);
+    };
+  
+    const sortProduct = () => {
+      let fpCopy = [...filterProducts];
+  
+      switch (sortType) {
+        case 'low-high':
+          setFilterProducts(fpCopy.sort((a, b) => (a.price - b.price)));
+          break;
+  
+        case 'high-low':
+          setFilterProducts(fpCopy.sort((a, b) => (b.price - a.price)));
+          break;
+  
+        default:
+          applyFilter();
+          break;
+      }
+    };
 
 
 
@@ -72,13 +74,13 @@ function ElectronicsCollection() {
           <p className='mb-3 text-sm font-medium'>CATEGORIES</p>
           <div className='flex flex-col gap-2 text-sm font-light text-gray-700'>
             <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={'Men'} /> Mobiles
+              <input className='w-3' type="checkbox" value={'Mobiles'} onChange={toggleSubCategory} /> Mobiles
             </p>
             <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={'Women'} /> Television
+              <input className='w-3' type="checkbox" value={'Televisions'} onChange={toggleSubCategory} /> Televisions
             </p>
             <p className='flex gap-2'>
-              <input className='w-3' type="checkbox" value={'Kids'} /> Appliances
+              <input className='w-3' type="checkbox" value={'Appilances'} onChange={toggleSubCategory} /> Appliances
             </p>
 
           </div>
@@ -92,7 +94,7 @@ function ElectronicsCollection() {
         <div className='flex justify-between text-base sm:text-2xl mb-4'>
           <Title text1={'Electronics'} text2={'COLLECTION'}/>
           {/* Product Sort */}
-          <select className='border-2 border-gray-300 text-sm px-2'>
+          <select onChange={(e) => setSortType(e.target.value)} className='border-2 border-gray-300 text-sm px-2'>
             <option value="relavant">Sort by : Relavant</option>
             <option value="low-high">Sort by : Low to High</option>
             <option value="high-low">Sort by : High to Low</option>

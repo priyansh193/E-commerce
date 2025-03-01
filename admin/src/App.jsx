@@ -30,7 +30,7 @@ function App() {
         ? <Login/>
         :
         <>
-          <Navbar setToken={setToken}/>
+          <Navbar/>
           <hr />
           <div className="flex w-full">
             <Sidebar/>

@@ -1,5 +1,5 @@
 import express from 'express'
-import { placeOrder, placeOrderStripe, placeOrderRazorpay, allOrders, userOrders, updateStatus } from '../controllers/order.controller.js'
+import { placeOrder, placeOrderStripe, placeOrderRazorpay, allOrders, userOrders, updateStatus, verifyStripe } from '../controllers/order.controller.js'
 import { verifyJWT } from '../middleware/auth.middleware.js'
 import {verifyShopjwt} from '../middleware/adminAuth.middleware.js'
 
@@ -13,9 +13,10 @@ router.post('/status', updateStatus)
 
 
 router.post('/place',verifyJWT, placeOrder)
-router.post('/stripe', placeOrderStripe)
+router.post('/stripe',verifyJWT, placeOrderStripe)
 router.post('/razorpay', placeOrderRazorpay)
 
 router.post('/userorders', verifyJWT, userOrders)
+router.post('/verify', verifyJWT, verifyStripe)
 
 export default router

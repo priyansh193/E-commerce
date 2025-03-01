@@ -9,7 +9,8 @@ function List({token}) {
 
   const fetchList = async () => {
     try {
-      const response = await axios.get(backendUrl + "/api/v1/products/list", {headers: {token}})
+      const response = await axios.post(backendUrl + "/api/v1/shop/getProducts",{} , {headers: {token}})
+      console.log(response)
       if (response.data.sucess){
         setList(response.data.data)
       }

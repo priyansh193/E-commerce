@@ -59,14 +59,55 @@ function Product() {
           </div>
           <p mt-5 text-3xl font-medium>{currency}{productData.price}</p>
           <p className='mt-5 text-gray-500 md:4/5'>{productData.description}</p>
-          <div className='flex flex-col gap-4 my-8'>
-            <p>Select Size</p>
-            <div className='flex gap-2'>
-              {productData.sizes.map((item,index) => (
-                <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-300 ${item === size ? "border-orange-500" : ''}`} key={index}>{item}</button>
-              ))}
-            </div>
-          </div>
+          {
+            productData.subCategory === 'Clothing' ? (
+              <div className='flex flex-col gap-4 my-8'>
+                <p>Select size </p>
+                <div className='flex gap-2'>
+                  {productData.sizes.map((item,index) => (
+                    <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-300 ${item === size ? "border-orange-500" : ''}`} key={index}>{item}</button>
+                  ))}
+                </div>
+                </div>
+            ) : null
+          }
+          {
+            productData.subCategory === 'Shoes' ? (
+              <div className='flex flex-col gap-4 my-8'>
+                <p>Select size (uk sizes) </p>
+                <div className='flex gap-2'>
+                  {productData.sizes.map((item,index) => (
+                    <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-300 ${item === size ? "border-orange-500" : ''}`} key={index}>{item}</button>
+                  ))}
+                </div>
+                </div>
+            ) : null
+          }
+          {
+            productData.subCategory === 'Mobiles' ? (
+              <div className='flex flex-col gap-4 my-8'>
+                <p>Select color </p>
+                <div className='flex gap-2'>
+                  {productData.sizes.map((item,index) => (
+                    <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-300 ${item === size ? "border-orange-500" : ''}`} key={index}>{item}</button>
+                  ))}
+                </div>
+                </div>
+            ) : null
+          }
+          {
+            productData.subCategory === 'Televisions' ? (
+              <div className='flex flex-col gap-4 my-8'>
+                <p>Select size (in inches) </p>
+                <div className='flex gap-2'>
+                  {productData.sizes.map((item,index) => (
+                    <button onClick={() => setSize(item)} className={`border py-2 px-4 bg-gray-300 ${item === size ? "border-orange-500" : ''}`} key={index}>{item}</button>
+                  ))}
+                </div>
+                </div>
+            ) : null
+          }   
+          <br />
           <button onClick={() => AddToCart(productData._id,size, productData.subCategory)} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'>ADD TO CART</button>
           <hr className='mt-8 sm:w-4/5' />
           <div className='text-sm text-gray-500 mt-5 flex flex-col gap-1'>

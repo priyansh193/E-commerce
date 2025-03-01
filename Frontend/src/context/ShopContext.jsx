@@ -22,7 +22,7 @@ const ShopContextProvider = (props) => {
 
     const AddToCart = async (itemId,size, subCategory) => {
 
-        if (subCategory === 'Clothing' || subCategory === 'Mobiles' || subCategory === 'Televisons' || subCategory === 'Watches'){
+        if (subCategory === 'Clothing' || subCategory === 'Mobiles' || subCategory === 'Televisons'){
             if (!size){
                 toast.error('Please select size')
                 return

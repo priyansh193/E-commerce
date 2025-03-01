@@ -13,12 +13,14 @@ const ShopContextProvider = (props) => {
     const [token, setToken] = useState('')
     const navigate = useNavigate();
 
-
     useEffect(() => {
         if (!token && localStorage.getItem('token')){
             setToken(localStorage.getItem('token'))
         }
     },[])
+
+   
+    
 
     const value = {
         

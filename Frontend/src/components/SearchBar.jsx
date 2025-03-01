@@ -9,7 +9,7 @@ function SearchBar() {
     const location = useLocation()
 
     useEffect(()=> {
-        if (location.pathname.includes('collection')){
+        if (location.pathname.includes('home-collection') || location.pathname.includes('fashion') || location.pathname.includes('electronics') || location.pathname.includes('beauty') || location.pathname.includes('sports') || location.pathname.includes('toys')){
             setVisible(true)
         }
         else{

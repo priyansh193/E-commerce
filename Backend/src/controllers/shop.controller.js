@@ -3,6 +3,7 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from '../utils/asyncHandler.js'
 import { Shop } from "../models/shop.model.js";
 import jwt from 'jsonwebtoken' 
+import mongoose, {isValidObjectId} from "mongoose"
 
 const generateAccessAndRefreshTokens = async(shopId) => {
     try {
@@ -119,11 +120,89 @@ const logoutShop = asyncHandler(async (req,res) => {
 })
 
 const getShopProducts = asyncHandler(async (req,res) => {
-    
+    const shop = await Shop.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(req.shop._id)
+            }
+        },
+        {
+            $lookup : {
+                from : "products",
+                localField : "_id",
+                foreignField : "owner",
+                as : "Product",
+                pipeline: [
+                    {
+                        $project : {
+                            name:1,
+                            price:1,
+                            image:1,
+                            category:1,
+                            subCategory:1,
+                        }
+                    }
+                ]
+            }
+        }
+    ])
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            shop[0].Product,
+            "Shop Products fetched successfully"
+        )
+    )
+
+})
+
+const getShopOrders = asyncHandler(async (req,res) => {
+    const shop = await Shop.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(req.shop._id)
+            }
+        },
+        {
+            $lookup: {
+                from: "orders",
+                localField : "_id",
+                foreignField : "seller",
+                as : "Orders",
+                pipeline : [
+                    {
+                        $project : {
+                            buyer : 1,
+                            items : 1,
+                            amount : 1,
+                            address : 1,
+                            status : 1,
+                            paymentMethod : 1,
+                            payment : 1,
+                            date : 1,
+                        }
+                    }
+                ]
+            }
+        }
+    ])
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            shop[0].Orders,
+            "Shop Products fetched successfully"
+        )
+    )
 })
 
 export {
     registerShop,
     loginShop,
-    logoutShop
+    logoutShop,
+    getShopProducts,
+    getShopOrders
 }

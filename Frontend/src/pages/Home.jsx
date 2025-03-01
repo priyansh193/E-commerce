@@ -1,29 +1,30 @@
 import React from "react";
-import Hero from "../components/Hero";
 import LatestCollection from "../components/LatestCollection";
-import BestSeller from "../components/BestSeller";
 import OurPolicy from "../components/OurPolicy";
 import ImageSlider from "../components/ImageSlider";
 import Categories from '../components/Categories.jsx'
 import ElectronicCollection from "../components/ElectronicCollection.jsx";
+import  {assets}  from "../assets/assets.js";
 
 const images = [
-  "https://via.placeholder.com/600x400?text=Image+1",
-  "https://via.placeholder.com/600x400?text=Image+2",
-  "https://via.placeholder.com/600x400?text=Image+3",
+  assets.fashionDeals,
+  assets.electronicDeal,
+  assets.ecomm
 ];
 
 function Home() {
   return (
     <div>
-      <Categories/>
+      <Categories />
       <br />
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <ImageSlider images={images} />
+      {/* Image Slider Section */}
+      <div className="w-full flex justify-center items-center bg-gray-100">
+        <ImageSlider images={images} autoSlide={true} autoSlideInterval={5000} />
       </div>
+      
+      {/* Other Sections */}
       <LatestCollection />
-      <ElectronicCollection/>
-      <BestSeller />
+      <ElectronicCollection />
       <OurPolicy />
     </div>
   );

@@ -17,21 +17,17 @@ function Navbar() {
     }
 
     const ShopPanel = () => {
-        <a href="http://localhost:5174"></a>
+        window.open("http://localhost:5174", "_blank");
     }
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
 
-        <Link to='/'><img src={assets.logo} className='w-36' alt="" /></Link>
+        <Link to='/'><img src={assets.logo} className='w-16 rounded-lg' alt="" /></Link>
 
-        <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
+        <ul className='hidden sm:flex justify-center gap-5 text-sm text-gray-700'>
             <NavLink to='/' className= 'flex flex-col items-center gap-1'>
                 <p>HOME</p>
-                <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
-            </NavLink>
-            <NavLink to='/fashion' className= 'flex flex-col items-center gap-1'>
-                <p>COLLECTION</p>
                 <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
             </NavLink>
             <NavLink to='/about' className= 'flex flex-col items-center gap-1'>
@@ -46,9 +42,9 @@ function Navbar() {
         </ul>
 
         <div className='flex items-center gap-6'>
-            <div className='flex items-center'>
+            <div className='flex items-center' onClick={ShopPanel}>
                 <img className='w-12 cursor-pointer' src={assets.shop_icon} alt="" />
-                <p className='text-gray-600'>Become a seller</p>
+                <p className='text-gray-600 cursor-pointer'>Become a seller</p>
            </div>
             <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 cursor pointer' alt="Search" />
 

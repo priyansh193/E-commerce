@@ -1,6 +1,7 @@
 import mongoose, {Schema} from "mongoose"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const shopSchema = new Schema (
     {
@@ -64,5 +65,7 @@ shopSchema.methods.generateRefreshToken = function(){
         }
     )
 }
+
+shopSchema.plugin(mongooseAggregatePaginate)
 
 export const Shop = mongoose.model("Shop", shopSchema)

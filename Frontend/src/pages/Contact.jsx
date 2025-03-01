@@ -14,7 +14,7 @@ function Contact() {
           <p className='font-semibold text-xl text-gray-600'> Our Store</p>
           <p className='text-gray-500'>54709 willms sterret</p>
           <p className='text-gray-500'>Tel : (459-730-9887)</p>
-          <p className='font-semibold text-xl'>Carrers at Forever</p>
+          <p className='font-semibold text-xl'>Carrers at Ecomm</p>
           <p className='text-gray-500'>Learn more about jobs and openings</p>
           <button className='border border-black px-8 py-4 text-sm hover:bg-black hoverz;text-white'>Explore Jobs</button>
         </div>
