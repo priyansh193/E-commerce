@@ -17,7 +17,7 @@ function Navbar() {
     }
 
     const ShopPanel = () => {
-        window.open("http://localhost:5174", "_blank");
+        window.open("https://e-commerce-admin-rose.vercel.app", "_blank");
     }
 
   return (
