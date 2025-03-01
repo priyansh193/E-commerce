@@ -20,7 +20,7 @@ function Orders({ token }) {
       );
       console.log(response)
       if (response.data.sucess) {
-        setOrders(response.data.data);
+        setOrders(response.data.data.reverse());
       } else {
         toast.error(response.data.response);
       }
@@ -51,7 +51,6 @@ function Orders({ token }) {
     <div>
       <h3>Order Page</h3>
       <div>
-        {console.log(orders)}
         {orders.map((order, index) => (
           <div className="grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start boarder-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 test-xs sm:text-sm text-gray-700" key={index}>
             <img className="w-12" src={assets.parcel_icon} alt="" />
