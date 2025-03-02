@@ -29,12 +29,32 @@ const addProduct = asyncHandler(async (req,res) => {
     
     const images = [image1,image2,image3,image4].filter((item) => item !== undefined)
 
-    let imageUrl = await Promise.all(
-        images.map(async (item) => {
-            let result = await cloudinary.uploader.upload(item.path, {resource_type: 'image'})
-            return result.secure_url
-        })
-    )
+    let imageUrl = [];
+
+    try {
+        imageUrl = await Promise.all(
+            images.map((item) => {
+                return new Promise((resolve, reject) => {
+                    const uploadStream = cloudinary.uploader.upload_stream(
+                        { resource_type: "image" },
+                        (error, result) => {
+                            if (error) {
+                                console.error("Cloudinary Upload Error:", error);
+                                reject(error);
+                            } else {
+                                resolve(result.secure_url);
+                            }
+                        }
+                    );
+                    uploadStream.end(item.buffer); // Upload from memory buffer
+                });
+            })
+    );
+    } catch (error) {
+        console.error("Cloudinary Upload Error:", error);
+        return res.status(500).json({ success: false, message: "Image upload failed", error });
+    }
+
 
     const product = await Product.create({
         name,
