@@ -16,7 +16,6 @@ function AddElectronics({ token }) {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Electronics");
   const [subCategory, setSubCategory] = useState("Mobiles");
-  const [bestSeller, setBestSeller] = useState("");
   const [sizes, setSizes] = useState([]); 
   const [color, setColor] = useState("");
   
@@ -43,7 +42,6 @@ function AddElectronics({ token }) {
       formData.append("price", price);
       formData.append("category", category);
       formData.append("subCategory", subCategory);
-      formData.append("bestSeller", bestSeller);
       formData.append("sizes", JSON.stringify(sizes));
 
       image1 && formData.append("image1", image1);
@@ -323,18 +321,6 @@ function AddElectronics({ token }) {
             </div>
           </div>
         )}
-      </div>
-
-      <div className="flex gap-2 mt-2">
-        <input
-          onChange={() => setBestSeller((prev) => !prev)}
-          checked={bestSeller}
-          type="checkbox"
-          id="bestSeller"
-        />
-        <label className="cursor-pointer" htmlFor="bestSeller">
-          Add to bestSeller
-        </label>
       </div>
 
       <button type="submit" className="w-28 py-3 mt-4 bg-black text-white">

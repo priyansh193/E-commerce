@@ -22,8 +22,17 @@ const ShopContextProvider = (props) => {
 
     const AddToCart = async (itemId,size, subCategory) => {
 
-        if (subCategory === 'Clothing' || subCategory === 'Mobiles' || subCategory === 'Televisons'){
-            if (!size){
+        if (!token){
+            navigate('/login')
+            return
+        }
+
+        if (subCategory === 'Clothing' || subCategory === 'Mobiles' || subCategory === 'Televisons' || subCategory === 'Shoes'){
+            if (!size && subCategory === 'Mobiles'){
+                toast.error('Please select color')
+                return
+            }
+            else if (!size && (subCategory === 'Clothing' || subCategory === 'Shoes' || subCategory === 'Televisons')){
                 toast.error('Please select size')
                 return
             }
@@ -50,6 +59,7 @@ const ShopContextProvider = (props) => {
         if (token) {
             try {
                 await axios.post(backendUrl + '/api/v1/cart/add', {itemId,size}, {headers : {token}})
+                toast.success('Item added to cart')
             } catch (error) {
                 console.log(error)
                 toast.error(error.message)

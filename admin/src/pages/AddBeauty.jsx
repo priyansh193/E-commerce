@@ -15,7 +15,6 @@ function AddBeauty({ token }) {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Beauty & Health");
   const [subCategory, setSubCategory] = useState("Cosmatics");
-  const [bestSeller, setBestSeller] = useState("");
   const [sizes, setSizes] = useState([]); 
   
   
@@ -30,7 +29,6 @@ function AddBeauty({ token }) {
       formData.append("price", price);
       formData.append("category", category);
       formData.append("subCategory", subCategory);
-      formData.append("bestSeller", bestSeller);
       formData.append("sizes", JSON.stringify(sizes));
 
       image1 && formData.append("image1", image1);
@@ -176,18 +174,6 @@ function AddBeauty({ token }) {
             placeholder="25"
           />
         </div>
-      </div>
-
-      <div className="flex gap-2 mt-2">
-        <input
-          onChange={() => setBestSeller((prev) => !prev)}
-          checked={bestSeller}
-          type="checkbox"
-          id="bestSeller"
-        />
-        <label className="cursor-pointer" htmlFor="bestSeller">
-          Add to bestSeller
-        </label>
       </div>
 
       <button type="submit" className="w-28 py-3 mt-4 bg-black text-white">

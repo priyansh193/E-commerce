@@ -20,6 +20,9 @@ function Login() {
           const response = await axios.post(backendUrl+ '/api/v1/shop/register', {name,email,password,Address})
           if (response.data.sucess){
             toast.success("shop created sucessfully please login")
+            setEmail('')
+            setPassword('')
+            setCurrentState('Login')
           }
           else{
             toast.error(response.data.message)
@@ -46,7 +49,7 @@ function Login() {
       }, [token])
 
   return (
-    <form onSubmit={onSubmitHandler} className='flex flex-col items-centerw-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col items-centerw-[90%] max-w-80 md:max-w-96 m-auto mt-14 gap-4 text-gray-800'>
       <div className='inline-flex items-center gap-2 mb-2 mt-10'>
         <p className='prata-regular text-3xl'>{currentState}</p>
         <hr className='border-none h-[1.5px] w-8 bg-gray-800' />
@@ -56,8 +59,8 @@ function Login() {
         <input onChange={(e) => setAddress(e.target.value)} type="text" className='w-full px-3 py-2 border border-gray-800' placeholder='Address' />
       </>
       }
-      <input onChange={(e) => setEmail(e.target.value)}  type="email" className='w-full px-3 py-2 border border-gray-800' placeholder='Email' />
-      <input onChange={(e) => setPassword(e.target.value)}  type="password" className='w-full px-3 py-2 border border-gray-800' placeholder='Password' />
+      <input value={email} onChange={(e) => setEmail(e.target.value)}  type="email" className='w-full px-3 py-2 border border-gray-800' placeholder='Email' />
+      <input value={password} onChange={(e) => setPassword(e.target.value)}  type="password" className='w-full px-3 py-2 border border-gray-800' placeholder='Password' />
       <div className='w-full flex justify-between text-sm mt-[-8px]'>
         <p className='cursor-pointer'>Forget Password</p>
         {

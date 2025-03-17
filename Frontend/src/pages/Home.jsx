@@ -18,7 +18,7 @@ function Home() {
       <Categories />
       <br />
       {/* Image Slider Section */}
-      <div className="w-full flex justify-center items-center bg-gray-100">
+      <div className="w-full bg-gray-100">
         <ImageSlider images={images} autoSlide={true} autoSlideInterval={5000} />
       </div>
       

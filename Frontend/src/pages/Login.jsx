@@ -18,7 +18,14 @@ function Login() {
       if (currentState === 'Sign Up'){
         const response = await axios.post(backendUrl+ '/api/v1/users/register', {name,email,password})
         if (response.data.sucess){
-          toast.success("user created sucessfully please login")
+          toast.success("user created sucessfully")
+          const responseLogin = await axios.post(backendUrl+ '/api/v1/users/login', {email,password})
+          if (responseLogin.data.sucess){
+            setToken(responseLogin.data.data.refreshToken)
+            localStorage.setItem('token', responseLogin.data.data.refreshToken)
+          } else{
+            toast.error(responseLogin.data.message)
+          }
         }
         else{
           toast.error(response.data.message)

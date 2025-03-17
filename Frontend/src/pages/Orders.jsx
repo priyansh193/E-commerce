@@ -4,9 +4,15 @@ import Title from '../components/Title'
 import axios from 'axios'
 
 function Orders() {
-  const {backendUrl, token, currency} = useContext(ShopContext)
+  const {backendUrl, token, currency, navigate} = useContext(ShopContext)
   const [orderData, setOrderData] = useState([])
 
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  },[token])
+  
   const loadOrderData = async () => {
     try {
       if (!token) {
@@ -39,6 +45,9 @@ function Orders() {
   },[token])
 
   return (
+
+    
+
     <div className='border-t pt-16'>
       <div className='text-2xl'>
         <Title text1 = {'MY'} text2 = {'ORDERS'}/>

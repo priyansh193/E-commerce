@@ -6,10 +6,10 @@ import {v2 as cloudinary} from 'cloudinary'
 import { isValidObjectId } from "mongoose";
 
 const addProduct = asyncHandler(async (req,res) => {
-    const {name, description, price, category, subCategory, sizes, bestSeller} = req.body
+    const {name, description, price, category, subCategory, sizes} = req.body
 
     if (
-        [name, description, price, category, subCategory, bestSeller].some((field) => field?.trim() === "")
+        [name, description, price, category, subCategory].some((field) => field?.trim() === "")
     ) {
         return res.json({success:false, message:"All fields are required"})
     }
@@ -46,7 +46,7 @@ const addProduct = asyncHandler(async (req,res) => {
                             }
                         }
                     );
-                    uploadStream.end(item.buffer); // Upload from memory buffer
+                    uploadStream.end(item.buffer); 
                 });
             })
     );
@@ -63,7 +63,6 @@ const addProduct = asyncHandler(async (req,res) => {
         price: Number(price),
         owner : req.shop._id,
         subCategory,
-        bestSeller : bestSeller === "true" ? true : false,
         sizes: JSON.parse(sizes),
         image: imageUrl,
         date : Date.now()
@@ -98,8 +97,7 @@ const removeProduct = asyncHandler(async (req,res) => {
     if (!product) {
         return res.json({success: false, message : "No such product exist"})
     }
-    /*console.log(typeof(product.owner))
-    console.log(typeof(req.shop._id))*/
+  
     if (JSON.stringify(product.owner) !== JSON.stringify(req.shop._id)){
         return res.json({success : false, message: "You are Not allowed to remove this Product"})
     }
