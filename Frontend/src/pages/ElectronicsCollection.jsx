@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import  {ShopContext}  from '../context/ShopContext.jsx'
+import { ShopContext } from '../context/ShopContext.jsx'
 import { assets } from '../assets/assets.js'
 import Title from '../components/Title.jsx'
 import ProductItem from '../components/ProductItem.jsx'
+import Pagination from '../components/Pagination.jsx'
 
 function ElectronicsCollection() {
   const {products, search, showSearch} = useContext(ShopContext)
@@ -10,6 +11,9 @@ function ElectronicsCollection() {
   const [filterProducts, setFilterProducts] = useState([])
   const [subCategory, setSubCategory] = useState([])
   const [sortType, setSortType] = useState('relavent')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const productsPerPage = 4 // Changed to match grid layout better
 
   useEffect(() => {
       applyFilter();
@@ -28,18 +32,29 @@ function ElectronicsCollection() {
     };
   
     const applyFilter = () => {
-      let productsCopy = products.filter((item) => item.category === 'Electronics');
+      setIsLoading(true)
+      try {
+        let productsCopy = products.filter((item) => item.category === 'Electronics')
+        
+        if (showSearch && search) {
+          productsCopy = productsCopy.filter(item => 
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+        }
   
-      if (showSearch && search) {
-        productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+        if (subCategory.length > 0) {
+          productsCopy = productsCopy.filter(item => 
+            subCategory.includes(item.subCategory)
+          )
+        }
+  
+        setFilterProducts(productsCopy)
+      } catch (error) {
+        console.error('Filtering error:', error)
+      } finally {
+        setIsLoading(false)
       }
-  
-      if (subCategory.length > 0) {
-        productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory));
-      }
-  
-      setFilterProducts(productsCopy);
-    };
+    }
   
     const sortProduct = () => {
       let fpCopy = [...filterProducts];
@@ -59,7 +74,20 @@ function ElectronicsCollection() {
       }
     };
 
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = filterProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+  const totalPages = Math.ceil(filterProducts.length / productsPerPage)
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [subCategory, search, sortType])
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -103,12 +131,33 @@ function ElectronicsCollection() {
 
         {/* Map Products */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
-          {
-            filterProducts.map((item,index) => (
-              <ProductItem key={index} name = {item.name} id={item._id} price={item.price} image={item.image}/>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : currentProducts.length === 0 ? (
+            <div className="col-span-full text-center py-8 text-gray-500">
+              No products found
+            </div>
+          ) : (
+            currentProducts.map((item) => (
+              <ProductItem
+                key={item._id}
+                name={item.name}
+                id={item._id}
+                price={item.price}
+                image={item.image}
+              />
             ))
-          }
+          )}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
 
       </div>
       
